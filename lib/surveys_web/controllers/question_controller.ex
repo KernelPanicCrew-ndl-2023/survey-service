@@ -1,8 +1,11 @@
 defmodule SurveysWeb.QuestionController do
   use SurveysWeb, :controller
 
+  alias Surveys.Answers
   alias Surveys.Questions
   alias Surveys.Questions.Question
+
+  require Logger
 
   action_fallback SurveysWeb.FallbackController
 
@@ -22,7 +25,11 @@ defmodule SurveysWeb.QuestionController do
 
   def show(conn, %{"id" => id}) do
     question = Questions.get_question!(id)
-    render(conn, :show, question: question)
+    answers = Answers.get_answers_of_question(id)
+
+    Logger.debug(length(answers))
+
+    render(conn, :show, question: question, answers: answers)
   end
 
   def update(conn, %{"id" => id, "question" => question_params}) do

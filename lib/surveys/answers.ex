@@ -102,4 +102,11 @@ defmodule Surveys.Answers do
   def change_answer(%Answer{} = answer, attrs \\ %{}) do
     Answer.changeset(answer, attrs)
   end
+
+  def get_answers_of_question(id) do
+    Repo.all(
+      from a in Answer,
+      where: a.question_id == ^id
+    )
+  end
 end
