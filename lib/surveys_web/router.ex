@@ -7,6 +7,8 @@ defmodule SurveysWeb.Router do
 
   scope "/api", SurveysWeb do
     pipe_through :api
+
+    resources "/questions", QuestionController, except: [:new, :edit]
   end
 
   # Enable LiveDashboard in development
