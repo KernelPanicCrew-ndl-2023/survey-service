@@ -12,8 +12,8 @@ defmodule SurveysWeb.QuestionJSON do
   @doc """
   Renders a single question.
   """
-  def show(%{question: question}) do
-    %{data: data(question)}
+  def show(%{question: question, answers: answers}) do
+    %{data: data(question, answers)}
   end
 
   defp data(%Question{} = question) do
@@ -22,6 +22,16 @@ defmodule SurveysWeb.QuestionJSON do
       text: question.text,
       previous: question.previous,
       next: question.next
+    }
+  end
+
+  defp data(%Question{} = question, answers) do
+    %{
+      id: question.id,
+      text: question.text,
+      previous: question.previous,
+      next: question.next,
+      answers: for(a <- answers, do: Map.delete(AnswerJSON.data(a), :question_id))
     }
   end
 end
