@@ -37,6 +37,13 @@ defmodule Surveys.Questions do
   """
   def get_question!(id), do: Repo.get!(Question, id)
 
+  def get_question(id) do
+    case Repo.get(Question, id) do
+      a when a != nil -> {:ok, a}
+      _ -> {:error, :not_found}
+    end
+  end
+
   @doc """
   Creates a question.
 

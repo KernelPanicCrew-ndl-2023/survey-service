@@ -11,7 +11,7 @@ defmodule SurveysWeb.Router do
     resources "/questions", QuestionController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]
     post "/users/compare", UserController, :compare
-
+    resources "/answers", AnswerController, except: [:new, :edit]
   end
 
   # Enable LiveDashboard in development
