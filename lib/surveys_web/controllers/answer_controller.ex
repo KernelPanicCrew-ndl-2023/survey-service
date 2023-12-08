@@ -5,6 +5,7 @@ defmodule SurveysWeb.AnswerController do
   alias Surveys.Questions
   alias Surveys.Answers
   alias Surveys.Answers.Answer
+  alias Surveys.Users
 
   action_fallback SurveysWeb.FallbackController
 
@@ -41,6 +42,26 @@ defmodule SurveysWeb.AnswerController do
 
     with {:ok, %Answer{}} <- Answers.delete_answer(answer) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def choose(conn, %{"id" => id}) do
+
+
+    if (email = Enum.at(get_req_header(conn, "authorization"), 0)) == [] do
+      conn |> put_status(:unauthorized)
+    else
+
+      Logger.debug("Getting choice from #{inspect(get_req_header(conn, "authorization"))}")
+      Logger.debug(email)
+      with {:ok, a} <- Answers.get_answer(id),
+           {:ok, _} <- Answers.update_answer(a, %{total_answers: a.total_answers + 1}),
+           {:ok, _} <- Users.increment_kg_of_co2(email, a.carbon_value) do
+
+          put_status(conn, 204)
+
+          text conn, ""
+      end
     end
   end
 end

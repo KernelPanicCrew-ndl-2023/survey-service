@@ -9,9 +9,12 @@ defmodule SurveysWeb.Router do
     pipe_through :api
 
     resources "/questions", QuestionController, except: [:new, :edit]
+
+    resources "/answers", AnswerController, except: [:new, :edit]
+    get "/answer/:id/choose/", AnswerController, :choose
+
     resources "/users", UserController, except: [:new, :edit]
     post "/users/compare", UserController, :compare
-    resources "/answers", AnswerController, except: [:new, :edit]
   end
 
   # Enable LiveDashboard in development
