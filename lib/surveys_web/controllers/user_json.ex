@@ -22,4 +22,10 @@ defmodule SurveysWeb.UserJSON do
       score: user.score
     }
   end
+
+  def comparision(%{score: score}) do
+    %{
+      score: "#{score}%"
+    }
+  end
 end

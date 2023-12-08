@@ -5,7 +5,7 @@ defmodule Surveys.Repo.Migrations.CreateUsers do
     create table(:users, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :email, :string
-      add :score, :decimal
+      add :score, :integer
 
       timestamps(type: :utc_datetime)
     end

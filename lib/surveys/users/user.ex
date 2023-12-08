@@ -6,7 +6,7 @@ defmodule Surveys.Users.User do
   @foreign_key_type :binary_id
   schema "users" do
     field :email, :string
-    field :score, :decimal
+    field :score, :integer
 
     timestamps(type: :utc_datetime)
   end

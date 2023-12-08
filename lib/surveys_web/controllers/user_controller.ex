@@ -6,6 +6,10 @@ defmodule SurveysWeb.UserController do
 
   action_fallback SurveysWeb.FallbackController
 
+  def compare(conn, %{"co2_kg" => co2}) do
+    render(conn, :comparision, score: Users.get_score(co2))
+  end
+
   def index(conn, _params) do
     users = Users.list_users()
     render(conn, :index, users: users)

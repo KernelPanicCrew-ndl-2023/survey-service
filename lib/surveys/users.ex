@@ -6,6 +6,8 @@ defmodule Surveys.Users do
   import Ecto.Query, warn: false
   alias Surveys.Repo
 
+
+  require Logger
   alias Surveys.Users.User
 
   @doc """
@@ -100,5 +102,21 @@ defmodule Surveys.Users do
   """
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
+  end
+
+  def get_score(kgCO2) do
+    all = Repo.all(
+      from t in Surveys.Users.User,
+      order_by: [asc: t.score]
+    ) |> Enum.map(fn u -> u.score end)
+
+    case Enum.find_index(all, fn x -> x > kgCO2 end) do
+      nil -> 100
+
+      val ->
+        Logger.debug("value #{inspect(all)}")
+        (val+1) / length(all) * 100
+    end
+
   end
 end
