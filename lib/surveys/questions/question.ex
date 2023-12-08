@@ -17,6 +17,6 @@ defmodule Surveys.Questions.Question do
   def changeset(question, attrs) do
     question
     |> cast(attrs, [:id, :text, :previous, :next])
-    |> validate_required([:id, :text, :previous, :next])
+    |> validate_required([:text])
   end
 end
