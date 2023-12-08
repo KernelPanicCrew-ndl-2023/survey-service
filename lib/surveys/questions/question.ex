@@ -1,4 +1,5 @@
 defmodule Surveys.Questions.Question do
+  alias Surveys.Answers.Answer
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,6 +10,7 @@ defmodule Surveys.Questions.Question do
     field :next, :string
     field :text, :string
     field :previous, :string
+    has_many :answer, Answer
 
     timestamps(type: :utc_datetime)
   end

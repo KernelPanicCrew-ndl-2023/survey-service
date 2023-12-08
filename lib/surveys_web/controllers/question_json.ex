@@ -1,5 +1,6 @@
 defmodule SurveysWeb.QuestionJSON do
   alias Surveys.Questions.Question
+  alias SurveysWeb.AnswerJSON
 
   @doc """
   Renders a list of questions.
@@ -17,7 +18,6 @@ defmodule SurveysWeb.QuestionJSON do
 
   defp data(%Question{} = question) do
     %{
-      id: question.id,
       id: question.id,
       text: question.text,
       previous: question.previous,
