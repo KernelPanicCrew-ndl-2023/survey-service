@@ -104,6 +104,14 @@ defmodule Surveys.Users do
     User.changeset(user, attrs)
   end
 
+  @doc """
+  Yes this method was named in a hurry
+
+  It takes in parameter a number of KG of co2 and tells you "you are in the top X% of the people that pollutes the less"
+  I does this by searching at what place he would be on the "leaderboard"
+
+  It returns a number between [0;100]
+  """
   def get_score(kgCO2) do
     all = Repo.all(
       from t in Surveys.Users.User,
@@ -118,5 +126,13 @@ defmodule Surveys.Users do
         (val+1) / length(all) * 100
     end
 
+  end
+
+  def increment_kg_of_co2(user, amount) do
+    case Repo.get_by(User, email: user) do
+      u when u != nil ->
+        Repo.update(Ecto.Changeset.update_change(u, :score, &(&1 + amount)))
+      _ -> Repo.insert(%User{ email: user, score: amount })
+    end
   end
 end
